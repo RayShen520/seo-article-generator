@@ -1,351 +1,234 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>豆包剧本生成器 (iPhone版)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RaySo AI——专注人工智能解决方案，提供智能办公、语言学习、AI+AR智能眼镜等创新产品。">
+  <title>RaySo AI - 智能科技引领未来</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* 全局样式 */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { line-height: 1.6; color: #333; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    section { padding: 80px 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    button { cursor: pointer; border: none; border-radius: 8px; padding: 12px 24px; background: #4f46e5; color: #fff; font-weight: 600; transition: all 0.3s; }
+    button:hover { background: #3730a3; transform: translateY(-2px); }
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+    /* 导航 */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+    nav .logo { font-size: 1.5rem; font-weight: 700; color: #4f46e5; }
+    nav ul { display: flex; gap: 20px; list-style: none; }
+    nav ul li { font-weight: 500; }
+    nav ul li a:hover { color: #4f46e5; }
 
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background-color: #1e1e1e;
-            overflow: hidden; /* 让内部控制滚动 */
-        }
+    /* Hero */
+    .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 80px; background: linear-gradient(-45deg, #4f46e5, #6366f1, #8b5cf6, #4f46e5); background-size: 400% 400%; color: #fff; animation: gradientBG 15s ease infinite; }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 20px; opacity:0; transform:translateY(30px); transition: all 1s ease; }
+    .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; opacity:0; transform:translateY(30px); transition: all 1s ease 0.3s; }
 
-        /* ---- 手机整体缩放容器 ---- */
-        .phone-scale-wrapper {
-            transform-origin: top center;
-            display: inline-block;
-        }
+    /* 产品模块 */
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 40px; }
+    .product-card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); text-align: center; transition: all 0.5s; opacity:0; transform:translateY(30px); }
+    .product-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .product-card h3 { margin-bottom: 15px; color: #4f46e5; }
+    .product-card p { color: #666; font-size: 0.95rem; }
 
-        /* --- iPhone 15 Pro 模拟 --- */
-        .iphone-bezel {
-            width: 400px;
-            height: 820px;
-            background-color: #1f1f1f;
-            border-radius: 55px;
-            box-shadow: 
-                0 0 0 2px #3a3a3a,
-                0 0 0 6px #000,
-                0 30px 60px rgba(0,0,0,0.6);
-            padding: 12px;
-            position: relative;
-            margin: 0 auto;
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
+    /* 团队模块 */
+    .team { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px; }
+    .member-card { text-align: center; opacity:0; transform:translateY(30px); transition: all 0.5s; }
+    .member-card img { border-radius: 50%; margin-bottom: 15px; }
+    .member-card h4 { margin-bottom: 5px; color: #4f46e5; }
+    .member-card p { font-size: 0.9rem; color: #555; }
 
-        .iphone-bezel::before {
-            content: ''; position: absolute; left: -8px; top: 120px;
-            width: 6px; height: 30px; background: #2a2a2a; border-radius: 4px 0 0 4px;
-        }
-        .iphone-bezel::after {
-            content: ''; position: absolute; left: -8px; top: 170px;
-            width: 6px; height: 60px; background: #2a2a2a; border-radius: 4px 0 0 4px;
-        }
-        .power-btn {
-            position: absolute; right: -8px; top: 190px;
-            width: 6px; height: 90px; background: #2a2a2a; border-radius: 0 4px 4px 0;
-        }
+    /* 联系我们模块 */
+    .contact form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; opacity:0; transform:translateY(30px); transition: all 0.5s; }
+    .contact input, .contact textarea { padding: 12px; border: 1px solid #ccc; border-radius: 8px; width: 100%; font-size: 1rem; }
+    .contact textarea { resize: vertical; min-height: 120px; }
 
-        .dynamic-island {
-            width: 120px;
-            height: 35px;
-            background-color: #000;
-            border-radius: 20px;
-            position: absolute;
-            top: 22px; left: 50%; transform: translateX(-50%);
-            z-index: 999;
-        }
+    /* 客户案例轮播 */
+    .carousel { position: relative; overflow: hidden; margin-top:40px; }
+    .carousel-track { display: flex; transition: transform 0.5s ease; gap: 20px; }
+    .case-card { min-width: 300px; background:#fff; border-radius:12px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.05); text-align:center; }
+    .carousel button { position: absolute; top:50%; transform: translateY(-50%); background: rgba(0,0,0,0.1); border:none; font-size:2rem; padding:0 10px; border-radius:50%; cursor:pointer; transition:0.3s; }
+    .carousel button:hover { background: rgba(0,0,0,0.2); }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    @media (max-width:768px){ .case-card { min-width: 80%; } }
 
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            border-radius: 44px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            clip-path: inset(0px round 44px);
-        }
+    /* AI+AR 产品互动效果 */
+    .interactive-demo { display:flex; justify-content:center; margin-top:40px; }
+    .product-img { position:relative; width:400px; transition: transform 0.5s; }
+    .product-img:hover { transform: scale(1.05) rotateY(10deg); }
+    .feature { position:absolute; background: rgba(79,70,229,0.8); color:#fff; padding:5px 10px; border-radius:6px; font-size:0.9rem; pointer-events:none; opacity:0; transition:0.5s; }
+    .product-img:hover .feature { opacity:1; }
+    @media(max-width:768px){ .product-img{ width:80%; } }
 
-        .doubao-bg { background-color: #f7f8fa; }
+    /* Footer */
+    footer { text-align: center; padding: 30px 20px; background: #f9f9f9; font-size: 0.9rem; color: #666; }
 
-        .bubble-user {
-            background-color: #3761F3;
-            color: white;
-            border-radius: 12px 2px 12px 12px;
-            padding: 11px 14px;
-            font-size: 15px;
-            line-height: 1.5;
-            max-width: 85%;
-        }
-
-        .bot-text {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #111;
-        }
-
-        .citation-bar {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #666;
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div id="app" class="flex h-full">
+  <!-- 导航 -->
+  <nav>
+    <div class="logo">RaySo AI</div>
+    <ul>
+      <li><a href="#products">产品</a></li>
+      <li><a href="#team">团队</a></li>
+      <li><a href="#cases">案例</a></li>
+      <li><a href="#interactive">互动</a></li>
+      <li><a href="#contact">联系我们</a></li>
+    </ul>
+  </nav>
 
-    <!-- 左侧编辑区（手机端隐藏） -->
-    <div class="w-[400px] admin-panel p-6 border-r border-gray-700 overflow-y-auto hidden md:flex flex-col">
-        <!-- 内容省略，与原文件一致 -->
+  <!-- Hero -->
+  <section class="hero">
+    <h1 class="fade-up">智能科技，引领未来</h1>
+    <p class="fade-up">RaySo AI 专注人工智能解决方案，提供智能办公、语言学习、AI+AR智能眼镜等创新产品，让生活与工作更高效、更智能。</p>
+    <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">立即联系</button>
+  </section>
+
+  <!-- 产品 -->
+  <section id="products" class="container">
+    <h2 style="text-align:center; color:#4f46e5;">我们的产品</h2>
+    <div class="products">
+      <div class="product-card">
+        <h3>智能眼镜</h3>
+        <p>AI+AR 可穿戴设备，支持实时翻译、导航、记忆辅助与vlog录制。</p>
+      </div>
+      <div class="product-card">
+        <h3>智能办公助手</h3>
+        <p>自动整理日程、生成文档摘要、语音识别与会议记录，提高工作效率。</p>
+      </div>
+      <div class="product-card">
+        <h3>语言学习应用</h3>
+        <p>基于 AI 的口语练习、单词记忆与语法纠错，帮助学习者快速提升交流能力。</p>
+      </div>
     </div>
+  </section>
 
-    <!-- 右侧预览区（关键：手机端可滚动） -->
-    <div class="flex-1 bg-[#333] flex items-start justify-center p-4 overflow-auto relative">
+  <!-- 团队 -->
+  <section id="team" class="container">
+    <h2 style="text-align:center; color:#4f46e5;">核心团队</h2>
+    <div class="team">
+      <div class="member-card">
+        <img src="https://via.placeholder.com/150" alt="CEO">
+        <h4>张三</h4>
+        <p>CEO & 创始人</p>
+      </div>
+      <div class="member-card">
+        <img src="https://via.placeholder.com/150" alt="CTO">
+        <h4>李四</h4>
+        <p>CTO & 技术总监</p>
+      </div>
+      <div class="member-card">
+        <img src="https://via.placeholder.com/150" alt="CMO">
+        <h4>王五</h4>
+        <p>CMO & 市场总监</p>
+      </div>
+    </div>
+  </section>
 
-        <!-- 自适应缩放容器 -->
-        <div class="phone-scale-wrapper">
-        <div ref="phoneRef" class="iphone-bezel">
-            <div class="power-btn"></div>
-            <div class="dynamic-island"></div>
-
-            <div class="phone-screen">
-
-                <!-- 状态栏 -->
-                <div class="ios-status-bar bg-white z-20 relative">
-                    <div class="w-20 pl-2 text-[15px] tracking-wide">{{ config.time }}</div>
-                    
-                    <div class="w-20 flex justify-end items-center gap-1.5 text-gray-900 pr-2">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2z"/></svg>
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12.01 21.49L23.64 7z"/></svg>
-                        <div class="flex items-center">
-                            <div class="relative">
-                                <div class="w-6 h-3 border-[1.5px] border-gray-800 rounded-[4px] p-[1px] flex items-center">
-                                    <div class="h-full bg-black rounded-[1px]" :style="{width: config.battery + '%'}"></div>
-                                </div>
-                                <div class="absolute -right-[2px] top-[3px] h-1 w-[1.5px] bg-gray-800"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 顶部栏 -->
-                <div class="h-[46px] bg-white flex items-center justify-between px-2 border-b border-gray-50 z-20 relative">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5"
-                             viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
-                    </div>
-                    <div class="flex flex-col items-center -ml-4">
-                        <div class="flex items-center gap-1.5">
-                            <span class="font-bold text-[16px]">大肉包</span>
-                        </div>
-                        <span class="text-[10px] text-gray-400">daroubao.com</span>
-                    </div>
-
-                    <div class="flex items-center gap-1 pr-1">
-                        <!-- icons -->
-                    </div>
-                </div>
-
-                <!-- 聊天内容 -->
-                <div class="flex-1 doubao-bg overflow-y-auto p-3 space-y-5 no-scrollbar relative">
-                    <div v-for="(msg, idx) in chatList" :key="idx"
-                         class="w-full flex flex-col relative"
-                         :class="msg.type === 'user' ? 'items-end' : 'items-start'">
-
-                        <div v-if="msg.type === 'user'" class="bubble-user"
-                             v-html="formatText(msg.content)"></div>
-
-                        <div v-else class="max-w-full w-full text-left">
-
-                            <div v-if="msg.citation" class="citation-bar">
-                                <span>引用 {{ msg.citation }} 篇资料参考</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
-                                     viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                                     d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-
-                            <div class="bot-text" v-html="formatText(msg.content)"></div>
-
-                            <div v-if="msg.hasArrow"
-                                 class="flex justify-center -mt-3 relative z-10 h-0">
-                                 <div class="w-10 h-10 bg-white rounded-full shadow-md border border-gray-100
-                                             flex items-center justify-center translate-y-[-10px]">
-                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
-                                         stroke-width="2" viewBox="0 0 24 24">
-                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                         d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                                    </svg>
-                                 </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 底部栏 -->
-                <div class="bg-white pt-2 pb-5 border-t border-gray-50 z-20 relative">
-                    <!-- pills -->
-                    <div class="w-[130px] h-[5px] bg-black rounded-full mx-auto mt-2 opacity-90"></div>
-                </div>
-
-            </div>
+  <!-- 客户案例轮播 -->
+  <section id="cases" class="container">
+    <h2 style="text-align:center; color:#4f46e5;">客户案例</h2>
+    <div class="carousel">
+      <button class="prev">&#10094;</button>
+      <div class="carousel-track">
+        <div class="case-card">
+          <img src="https://via.placeholder.com/300x180" alt="客户1">
+          <h4>某科技企业</h4>
+          <p>使用 RaySo AI 智能办公助手，实现团队效率提升 40%</p>
         </div>
-        </div> <!-- End phone-scale-wrapper -->
-
+        <div class="case-card">
+          <img src="https://via.placeholder.com/300x180" alt="客户2">
+          <h4>教育培训机构</h4>
+          <p>引入 AI+AR 智能眼镜，提高学生语言学习互动体验</p>
+        </div>
+        <div class="case-card">
+          <img src="https://via.placeholder.com/300x180" alt="客户3">
+          <h4>跨境电商平台</h4>
+          <p>使用智能翻译与数据分析工具，实现海外市场拓展</p>
+        </div>
+      </div>
+      <button class="next">&#10095;</button>
     </div>
-</div>
+  </section>
 
-<script>
-const { createApp, ref, reactive, onMounted } = Vue;
+  <!-- AI+AR 产品互动效果 -->
+  <section id="interactive" class="container">
+    <h2 style="text-align:center; color:#4f46e5;">AI+AR 智能眼镜互动展示</h2>
+    <div class="interactive-demo">
+      <div class="product-img">
+        <img src="https://via.placeholder.com/400x300" alt="智能眼镜">
+        <div class="feature" style="top:20%; left:60%;">实时翻译</div>
+        <div class="feature" style="top:50%; left:30%;">导航提示</div>
+        <div class="feature" style="top:70%; left:70%;">vlog录制</div>
+      </div>
+    </div>
+  </section>
 
-createApp({
-    setup() {
-        const phoneRef = ref(null);
-        const isGenerating = ref(false);
+  <!-- 联系我们 -->
+  <section id="contact" class="contact container">
+    <h2 style="text-align:center; color:#4f46e5;">联系我们</h2>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <input type="text" name="name" placeholder="姓名" required>
+      <input type="email" name="email" placeholder="邮箱" required>
+      <textarea name="message" placeholder="留言" required></textarea>
+      <button type="submit">发送消息</button>
+    </form>
+  </section>
 
-        const defaultScript = `B: 店主打汽车维修养护...`;
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 RaySo AI. 保留所有权利.
+  </footer>
 
-        const scriptText = ref(defaultScript);
-        const chatList = ref([]);
-        const config = reactive({
-            time: '10:34',
-            battery: 60
-        });
-
-        const parseScript = () => {
-            const lines = scriptText.value.split('\n');
-            const result = [];
-            let currentCitation = null;
-
-            lines.forEach(line => {
-                const trimLine = line.trim();
-                if (!trimLine) return;
-
-                if (trimLine.startsWith('引用:')) {
-                    currentCitation = trimLine.split(/[:：]/)[1].trim();
-                    return;
-                }
-
-                if (trimLine === '[箭头]') {
-                    if (result.length > 0 && result[result.length-1].type === 'bot')
-                        result[result.length-1].hasArrow = true;
-                    return;
-                }
-
-                if (trimLine.startsWith('A:')) {
-                    result.push({ type: 'user', content: trimLine.slice(2).trim() });
-                    currentCitation = null;
-                } else if (trimLine.startsWith('B:')) {
-                    result.push({
-                        type: 'bot',
-                        content: trimLine.slice(2).trim(),
-                        citation: currentCitation,
-                        hasArrow: false
-                    });
-                    currentCitation = null;
-                } else {
-                    if (result.length > 0)
-                        result[result.length - 1].content += '\n' + trimLine;
-                }
-            });
-
-            chatList.value = result;
-        };
-
-        const formatText = (text) => {
-            if (!text) return '';
-            return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-        };
-
-        const resetScript = () => {
-            scriptText.value = defaultScript;
-            parseScript();
-        };
-
-        /* ----------- 新版：宽度 + 高度双维度缩放 ----------- */
-        const autoScale = () => {
-            const wrapper = document.querySelector('.phone-scale-wrapper');
-            if (!wrapper) return;
-
-            const phoneWidth = 400;
-            const phoneHeight = 820;
-
-            const maxWidth = window.innerWidth * 0.95;
-            const maxHeight = window.innerHeight * 0.90;
-
-            const scaleX = maxWidth / phoneWidth;
-            const scaleY = maxHeight / phoneHeight;
-
-            const scale = Math.min(scaleX, scaleY, 1);
-
-            wrapper.style.transform = `scale(${scale})`;
-        };
-
-        const downloadImage = async () => {
-            if (!phoneRef.value) return;
-            isGenerating.value = true;
-
-            try {
-                await new Promise(r => setTimeout(r, 100));
-
-                const canvas = await html2canvas(phoneRef.value, {
-                    scale: 3,
-                    useCORS: true,
-                    backgroundColor: null,
-                    logging: false
-                });
-
-                const link = document.createElement('a');
-                link.download = `doubao_chat_${Date.now()}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-
-            } catch (err) {
-                alert('截图生成失败，请重试');
-            } finally {
-                isGenerating.value = false;
-            }
-        };
-
-        onMounted(() => {
-            parseScript();
-            autoScale();
-            window.addEventListener('resize', autoScale);
-        });
-
-        return {
-            scriptText, chatList, config,
-            phoneRef, isGenerating,
-            parseScript, formatText, resetScript,
-            downloadImage
-        };
+  <!-- JS 动画 & 客户案例轮播 -->
+  <script>
+    // 滚动动画
+    const fadeElements = document.querySelectorAll('.fade-up, .product-card, .member-card, .contact form');
+    function handleScroll() {
+      const triggerBottom = window.innerHeight * 0.85;
+      fadeElements.forEach(el => {
+        const boxTop = el.getBoundingClientRect().top;
+        if(boxTop < triggerBottom){
+          el.style.opacity = 1;
+          el.style.transform = 'translateY(0)';
+        }
+      });
     }
-}).mount('#app');
-</script>
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
 
+    // 客户案例轮播
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let index = 0;
+
+    function updateCarousel(){
+      const width = track.children[0].offsetWidth + 20; 
+      track.style.transform = `translateX(${-index * width}px)`;
+    }
+
+    nextBtn.addEventListener('click', ()=>{ index = (index+1) % track.children.length; updateCarousel(); });
+    prevBtn.addEventListener('click', ()=>{ index = (index-1+track.children.length) % track.children.length; updateCarousel(); });
+    window.addEventListener('resize', updateCarousel);
+  </script>
 </body>
 </html>
