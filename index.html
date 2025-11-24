@@ -10,8 +10,8 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap'); /* 用于顶部时间 */
-        
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #1e1e1e;
@@ -20,68 +20,69 @@
             overflow: hidden;
         }
 
+        /* ---- 新增：手机整体缩放容器 ---- */
+        .phone-scale-wrapper {
+            transform-origin: top center;
+            display: inline-block;
+        }
+
         /* --- iPhone 15 Pro 外壳模拟 --- */
         .iphone-bezel {
             width: 400px; /* 手机总宽度 */
             height: 820px; /* 手机总高度 */
-            background-color: #1f1f1f; /* 边框深色 */
-            border-radius: 55px; /* 机身圆角 */
+            background-color: #1f1f1f;
+            border-radius: 55px;
             box-shadow: 
-                0 0 0 2px #3a3a3a, /* 边框金属光泽 */
-                0 0 0 6px #000,    /* 黑色外圈 */
-                0 30px 60px rgba(0,0,0,0.6); /* 阴影 */
-            padding: 12px; /* 边框厚度 */
+                0 0 0 2px #3a3a3a,
+                0 0 0 6px #000,
+                0 30px 60px rgba(0,0,0,0.6);
+            padding: 12px;
             position: relative;
             margin: 0 auto;
             box-sizing: border-box;
             flex-shrink: 0;
         }
 
-        /* 静音键/音量键模拟 (装饰用) */
         .iphone-bezel::before {
-            content: ''; position: absolute; left: -8px; top: 120px; width: 6px; height: 30px; background: #2a2a2a; border-radius: 4px 0 0 4px;
+            content: ''; position: absolute; left: -8px; top: 120px;
+            width: 6px; height: 30px; background: #2a2a2a; border-radius: 4px 0 0 4px;
         }
         .iphone-bezel::after {
-            content: ''; position: absolute; left: -8px; top: 170px; width: 6px; height: 60px; background: #2a2a2a; border-radius: 4px 0 0 4px;
+            content: ''; position: absolute; left: -8px; top: 170px;
+            width: 6px; height: 60px; background: #2a2a2a; border-radius: 4px 0 0 4px;
         }
         .power-btn {
-            position: absolute; right: -8px; top: 190px; width: 6px; height: 90px; background: #2a2a2a; border-radius: 0 4px 4px 0;
+            position: absolute; right: -8px; top: 190px;
+            width: 6px; height: 90px; background: #2a2a2a; border-radius: 0 4px 4px 0;
         }
 
-        /* 灵动岛 (Dynamic Island) */
         .dynamic-island {
             width: 120px;
             height: 35px;
             background-color: #000;
             border-radius: 20px;
             position: absolute;
-            top: 22px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 22px; left: 50%; transform: translateX(-50%);
             z-index: 999;
         }
 
-        /* --- 屏幕区域 --- */
         .phone-screen {
             width: 100%;
             height: 100%;
             background: #fff;
-            border-radius: 44px; /* 屏幕内圆角 */
-            overflow: hidden; /* 防止内容溢出圆角 */
+            border-radius: 44px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
-            /* 修复截图时的圆角问题 */
             mask-image: radial-gradient(white, black);
             -webkit-mask-image: -webkit-radial-gradient(white, black); 
             clip-path: inset(0px round 44px);
         }
 
-        /* --- 豆包UI还原 --- */
         .doubao-blue { color: #3761F3; }
         .doubao-bg { background-color: #f7f8fa; }
 
-        /* 用户气泡 */
         .bubble-user {
             background-color: #3761F3;
             color: white;
@@ -90,18 +91,14 @@
             font-size: 15px;
             line-height: 1.5;
             max-width: 85%;
-            box-shadow: 0 1px 2px rgba(55, 97, 243, 0.1);
         }
 
-        /* 机器人的文字 */
         .bot-text {
             font-size: 15px;
             line-height: 1.7;
             color: #111;
         }
-        .bot-text strong { font-weight: 650; }
 
-        /* 引用栏 */
         .citation-bar {
             display: flex;
             align-items: center;
@@ -111,7 +108,6 @@
             margin-bottom: 6px;
         }
 
-        /* 底部胶囊按钮 */
         .pill-btn {
             background: #f2f4f7;
             padding: 7px 12px;
@@ -124,25 +120,22 @@
             white-space: nowrap;
         }
 
-        /* 滚动条隐藏 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        
-        /* --- 后台编辑区样式 --- */
+
         .admin-panel {
             background: #2d2d2d;
             color: #eee;
         }
-        
+
         textarea:focus { outline: none; border-color: #3761F3; }
 
-        /* iOS 状态栏特殊布局 */
         .ios-status-bar {
             height: 54px;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* 不再是 flex-end，为了对齐灵动岛 */
+            align-items: center;
             padding: 0 22px;
-            padding-top: 12px; /* 避让圆角 */
+            padding-top: 12px;
             font-family: 'Roboto', sans-serif;
             font-weight: 600;
             font-size: 16px;
@@ -150,25 +143,23 @@
         }
     </style>
 </head>
+
 <body>
 
 <div id="app" class="flex h-full">
-    
+
     <div class="w-[400px] admin-panel p-6 border-r border-gray-700 overflow-y-auto hidden md:flex flex-col">
         
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                <span>📱 剧本编辑器</span>
-            </h2>
-            <button @click="downloadImage" 
-                    :disabled="isGenerating"
-                    class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-sm font-medium transition flex items-center gap-1">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">📱 剧本编辑器</h2>
+            <button @click="downloadImage" :disabled="isGenerating"
+                class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-sm">
                 <span v-if="isGenerating">生成中...</span>
                 <span v-else>📸 保存截图</span>
             </button>
         </div>
 
-        <p class="text-xs text-gray-400 mb-6">左边修改，右边即时预览。点击上方按钮保存图片。</p>
+        <p class="text-xs text-gray-400 mb-6">左边修改，右边即时预览。</p>
 
         <div class="space-y-3 mb-6 border-b border-gray-600 pb-6">
             <h3 class="text-sm font-bold text-gray-300">状态栏设置</h3>
@@ -187,25 +178,29 @@
         <div class="flex-1 flex flex-col">
             <div class="flex justify-between items-end mb-2">
                 <h3 class="text-sm font-bold text-gray-300">对话脚本</h3>
-                <button @click="resetScript" class="text-xs text-red-400 hover:text-red-300 underline">恢复默认</button>
+                <button @click="resetScript" class="text-xs text-red-400 underline">恢复默认</button>
             </div>
-            <textarea v-model="scriptText" @input="parseScript" 
-                class="flex-1 w-full bg-[#1e1e1e] border border-gray-600 rounded-lg p-4 text-sm font-mono leading-relaxed text-gray-300 resize-none"
+
+            <textarea v-model="scriptText" @input="parseScript"
+                class="flex-1 w-full bg-[#1e1e1e] border border-gray-600 rounded-lg p-4 text-sm font-mono text-gray-300 leading-relaxed resize-none"
                 placeholder="A: 你好&#10;B: 你好，我是豆包..."></textarea>
             
             <div class="mt-3 bg-[#3a3a3a] p-3 rounded text-xs text-gray-400 leading-6">
-                <p><span class="text-blue-400 font-bold">A: 内容</span> 生成用户蓝气泡</p>
-                <p><span class="text-green-400 font-bold">B: 内容</span> 生成豆包回复</p>
-                <p><span class="text-yellow-400 font-bold">引用: 19</span> 下一条回复显示引用资料</p>
-                <p><span class="text-purple-400 font-bold">[箭头]</span> 在上一条回复加下展箭头</p>
-                <p><span class="text-white">**加粗**</span> 支持Markdown加粗</p>
+                <p><span class="text-blue-400 font-bold">A: 内容</span> 用户蓝气泡</p>
+                <p><span class="text-green-400 font-bold">B: 内容</span> 豆包回复</p>
+                <p><span class="text-yellow-400 font-bold">引用: 19</span> 显示引用资料</p>
+                <p><span class="text-purple-400 font-bold">[箭头]</span> 上一条回复加箭头</p>
+                <p><span class="text-white">**加粗**</span> 支持 Markdown</p>
             </div>
         </div>
     </div>
 
     <div class="flex-1 bg-[#333] flex items-center justify-center p-4 overflow-hidden relative">
-        
+
+        <!-- 📌 新增：手机自适应缩放容器 -->
+        <div class="phone-scale-wrapper">
         <div ref="phoneRef" class="iphone-bezel">
+
             <div class="power-btn"></div>
             <div class="dynamic-island"></div>
 
@@ -216,7 +211,7 @@
                     
                     <div class="w-20 flex justify-end items-center gap-1.5 text-gray-900 pr-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2z"/></svg>
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49.01.01.01-.01z"/></svg>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49z"/></svg>
                         <div class="flex items-center">
                             <div class="relative">
                                 <div class="w-6 h-3 border-[1.5px] border-gray-800 rounded-[4px] p-[1px] flex items-center">
@@ -230,39 +225,50 @@
 
                 <div class="h-[46px] bg-white flex items-center justify-between px-2 border-b border-gray-50 z-20 relative">
                     <div class="w-10 h-10 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5"
+                             viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
                     </div>
                     <div class="flex flex-col items-center -ml-4">
-                        <div class="flex items-center gap-1.5">
-                            <span class="font-bold text-[16px]">大肉包</span>
-                        </div>
-                        <span class="text-[10px] text-gray-400 leading-none mt-[1px]">daroubao.com</span>
+                        <div class="flex items-center gap-1.5"><span class="font-bold text-[16px]">大肉包</span></div>
+                        <span class="text-[10px] text-gray-400">daroubao.com</span>
                     </div>
                     <div class="flex items-center gap-1 pr-1">
-                         <svg class="w-8 h-8 p-1.5 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                         <svg class="w-8 h-8 p-1.5 text-[#3761F3]" fill="currentColor" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z m4.5 7c0-1.7-1-3.2-2.5-4v8c1.5-0.8 2.5-2.3 2.5-4z m2 0c0 3-2 5.5-4.5 6.3v1.8c3.8-1 6.5-4.5 6.5-8.1s-2.7-7.1-6.5-8.1v1.8c2.5 0.8 4.5 3.3 4.5 6.3z"/></svg>
-                         <svg class="w-8 h-8 p-1.5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                         <svg class="w-8 h-8 p-1.5 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.8"
+                              viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+
+                         <svg class="w-8 h-8 p-1.5 text-[#3761F3]" fill="currentColor"
+                              viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z m4.5 7c0-1.7-1-3.2-2.5-4v8c1.5-0.8 2.5-2.3 2.5-4z m2 0c0 3-2 5.5-4.5 6.3v1.8c3.8-1 6.5-4.5 6.5-8.1s-2.7-7.1-6.5-8.1v1.8c2.5 0.8 4.5 3.3 4.5 6.3z"/></svg>
+
+                         <svg class="w-8 h-8 p-1.5 text-gray-900" fill="currentColor"
+                              viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                     </div>
                 </div>
 
                 <div class="flex-1 doubao-bg overflow-y-auto p-3 space-y-5 no-scrollbar relative">
                     
-                    <div v-for="(msg, idx) in chatList" :key="idx" class="w-full flex flex-col relative" :class="msg.type === 'user' ? 'items-end' : 'items-start'">
+                    <div v-for="(msg, idx) in chatList" :key="idx" class="w-full flex flex-col relative"
+                         :class="msg.type === 'user' ? 'items-end' : 'items-start'">
                         
                         <div v-if="msg.type === 'user'" class="bubble-user" v-html="formatText(msg.content)"></div>
 
                         <div v-else class="max-w-full w-full text-left">
                             
                             <div v-if="msg.citation" class="citation-bar">
-                                <span>引用 {{ msg.citation }} 篇资料作为参考</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                                <span>引用 {{ msg.citation }} 篇资料参考</span>
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                     viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                                     d="M9 5l7 7-7 7"></path></svg>
                             </div>
 
                             <div class="bot-text" v-html="formatText(msg.content)"></div>
 
-                            <div v-if="msg.hasArrow" class="flex justify-center -mt-3 relative z-10 h-0 overflow-visible">
-                                 <div class="w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center translate-y-[-10px]">
-                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                            <div v-if="msg.hasArrow" class="flex justify-center -mt-3 relative z-10 h-0">
+                                 <div class="w-10 h-10 bg-white rounded-full shadow-md border border-gray-100
+                                             flex items-center justify-center translate-y-[-10px]">
+                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                         stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round"
+                                         stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                                  </div>
                             </div>
 
@@ -274,168 +280,170 @@
 
                 <div class="bg-white pt-2 pb-5 border-t border-gray-50 z-20 relative">
                     <div class="flex gap-2.5 px-3 mb-3 overflow-x-auto no-scrollbar">
-                        <div class="pill-btn"><span class="text-xl leading-none" style="color:#6b6bf7">∞</span> 深度思考</div>
+                        <div class="pill-btn"><span class="text-xl" style="color:#6b6bf7">∞</span> 深度思考</div>
                         <div class="pill-btn">🎨 AI 生图</div>
                         <div class="pill-btn">📝 帮我写作</div>
                         <div class="pill-btn">📞 打电话</div>
                     </div>
                     <div class="px-3 flex items-center gap-2">
                          <div class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                 viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                          </div>
+
                          <div class="flex-1 h-[40px] bg-[#f2f4f5] rounded-full flex items-center px-4 text-[#999] text-[15px]">
                             发消息或按住说话...
                          </div>
+
                          <div class="w-9 h-9 rounded-full border border-black flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                            </svg>
                          </div>
+
                          <div class="w-9 h-9 rounded-full border border-black flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                 viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                          </div>
                     </div>
+
                     <div class="w-[130px] h-[5px] bg-black rounded-full mx-auto mt-2 opacity-90"></div>
                 </div>
 
             </div>
         </div>
+        </div> <!-- End phone-scale-wrapper -->
+
     </div>
 </div>
 
 <script>
-    const { createApp, ref, reactive, onMounted } = Vue;
+const { createApp, ref, reactive, onMounted } = Vue;
 
-    createApp({
-        setup() {
-            const phoneRef = ref(null);
-            const isGenerating = ref(false);
+createApp({
+    setup() {
+        const phoneRef = ref(null);
+        const isGenerating = ref(false);
 
-            const defaultScript = `B: 店主打汽车维修养护，日常常规保养不用跑远路，适合就近保养的情况，沟通和到店都很便捷。
-A: 我在苹果小区，想给女儿找个数学补习，可以推荐一下吗
-引用: 19
-B: 你大概率指的是青羊区贝森路附近的小区，这里给你推荐几家周边口碑好、距离近的数学补习机构，适配不同学习需求，具体如下：
+        const defaultScript = `B: 店主打汽车维修养护...`;
 
-**1. 龙新教育（青羊西村大院校区）：** 就在贝森北路1号西村大院4号楼3层，离苹果小区特别近。主打小学到高中的数学一对一辅导。
+        const scriptText = ref(defaultScript);
+        const chatList = ref([]);
+        const config = reactive({
+            time: '10:34',
+            battery: 60
+        });
 
-**2. 极客数学帮（金沙校区）：** 位于青羊区清江西路54号，周边公交便捷。机构专攻数学辅导，课程分同步巩固、思维提升等类型。
-[箭头]
-**3. 美博教育（西门校区）：** 在青羊区苏坡东路`;
+        const parseScript = () => {
+            const lines = scriptText.value.split('\n');
+            const result = [];
+            let currentCitation = null;
 
-            const scriptText = ref(defaultScript);
-            const chatList = ref([]);
-            const config = reactive({
-                time: '10:34',
-                battery: 60
+            lines.forEach(line => {
+                const trimLine = line.trim();
+                if (!trimLine) return;
+
+                if (trimLine.startsWith('引用:')) {
+                    currentCitation = trimLine.split(/[:：]/)[1].trim();
+                    return;
+                }
+
+                if (trimLine === '[箭头]') {
+                    if (result.length > 0 && result[result.length-1].type === 'bot') {
+                        result[result.length-1].hasArrow = true;
+                    }
+                    return;
+                }
+
+                if (trimLine.startsWith('A:')) {
+                    result.push({ type: 'user', content: trimLine.substring(2).trim() });
+                    currentCitation = null;
+                } 
+                else if (trimLine.startsWith('B:')) {
+                    result.push({
+                        type: 'bot', content: trimLine.substring(2).trim(),
+                        citation: currentCitation, hasArrow: false
+                    });
+                    currentCitation = null;
+                }
+                else {
+                    if (result.length > 0) {
+                        result[result.length - 1].content += '\n' + trimLine;
+                    }
+                }
             });
 
-            // 核心解析逻辑
-            const parseScript = () => {
-                const lines = scriptText.value.split('\n');
-                const result = [];
-                let currentCitation = null;
+            chatList.value = result;
+        };
 
-                lines.forEach(line => {
-                    const trimLine = line.trim();
-                    if (!trimLine) return;
+        const formatText = (text) => {
+            if (!text) return '';
+            let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        };
 
-                    if (trimLine.startsWith('引用:') || trimLine.startsWith('Ref:')) {
-                        currentCitation = trimLine.split(/[:：]/)[1].trim();
-                        return;
-                    }
+        const resetScript = () => {
+            scriptText.value = defaultScript;
+            parseScript();
+        };
 
-                    if (trimLine === '[箭头]' || trimLine === '[ARROW]') {
-                        if (result.length > 0 && result[result.length-1].type === 'bot') {
-                            result[result.length-1].hasArrow = true;
-                        }
-                        return;
-                    }
+        /* ----------- 新增：自动缩放函数 ----------- */
+        const autoScale = () => {
+            const wrapper = document.querySelector('.phone-scale-wrapper');
+            if (!wrapper) return;
 
-                    if (trimLine.startsWith('A:') || trimLine.startsWith('我:')) {
-                        const content = trimLine.replace(/^(A:|我:|User:)\s*/i, '');
-                        result.push({ type: 'user', content: content });
-                        currentCitation = null;
-                    } 
-                    else if (trimLine.startsWith('B:') || trimLine.startsWith('豆包:')) {
-                        const content = trimLine.replace(/^(B:|豆包:|Bot:)\s*/i, '');
-                        result.push({ 
-                            type: 'bot', 
-                            content: content, 
-                            citation: currentCitation,
-                            hasArrow: false
-                        });
-                        currentCitation = null;
-                    }
-                    else {
-                        if (result.length > 0) {
-                            const lastMsg = result[result.length - 1];
-                            lastMsg.content += '\n' + trimLine;
-                        }
-                    }
+            const phoneWidth = 400; // 固定手机宽度
+            const maxWidth = window.innerWidth * 0.9; // 保留 10% 边距
+            const scale = Math.min(maxWidth / phoneWidth, 1);
+
+            wrapper.style.transform = `scale(${scale})`;
+        };
+
+        const downloadImage = async () => {
+            if (!phoneRef.value) return;
+            isGenerating.value = true;
+
+            try {
+                await new Promise(r => setTimeout(r, 100));
+
+                const canvas = await html2canvas(phoneRef.value, {
+                    scale: 3,
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
                 });
 
-                chatList.value = result;
-            };
+                const link = document.createElement('a');
+                link.download = `doubao_chat_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
 
-            const formatText = (text) => {
-                if (!text) return '';
-                let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                html = html.replace(/\n/g, '<br>');
-                return html;
-            };
-
-            const resetScript = () => {
-                scriptText.value = defaultScript;
-                parseScript();
+            } catch (err) {
+                alert('截图生成失败，请重试');
+            } finally {
+                isGenerating.value = false;
             }
+        };
 
-            // --- 截图功能 ---
-            const downloadImage = async () => {
-                if (!phoneRef.value) return;
-                isGenerating.value = true;
+        onMounted(() => {
+            parseScript();
+            autoScale();                 // ← 新增
+            window.addEventListener('resize', autoScale);  // ← 新增
+        });
 
-                try {
-                    // 等待一小会儿确保渲染完成
-                    await new Promise(r => setTimeout(r, 100));
-
-                    // 使用 html2canvas 截图
-                    // scale: 3 保证高清屏下的清晰度
-                    const canvas = await html2canvas(phoneRef.value, {
-                        scale: 3,
-                        useCORS: true,
-                        backgroundColor: null, // 透明背景，这样只有手机和边框
-                        logging: false
-                    });
-
-                    // 触发下载
-                    const link = document.createElement('a');
-                    link.download = `doubao_chat_${new Date().getTime()}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-
-                } catch (err) {
-                    console.error('截图失败:', err);
-                    alert('截图生成失败，请重试');
-                } finally {
-                    isGenerating.value = false;
-                }
-            };
-
-            onMounted(() => {
-                parseScript();
-            });
-
-            return {
-                scriptText,
-                chatList,
-                config,
-                phoneRef,
-                isGenerating,
-                parseScript,
-                formatText,
-                resetScript,
-                downloadImage
-            };
-        }
-    }).mount('#app');
+        return {
+            scriptText, chatList, config,
+            phoneRef, isGenerating,
+            parseScript, formatText, resetScript,
+            downloadImage
+        };
+    }
+}).mount('#app');
 </script>
 
 </body>
